@@ -13,14 +13,14 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import com.myBoard.dao.MemberDAO;
 import com.myBoard.dao.MemberDAOImpl;
 import com.myBoard.dataSource.OracleMyBatisSqlSessionFactory;
-import com.myBoard.dto.MemberVO;
 import com.myBoard.service.MemberService;
 import com.myBoard.service.MemberServiceImpl;
 
-@WebServlet("/detail")
-public class GetMemberDetail extends HttpServlet{
 
-private MemberService memberService;
+@WebServlet("/deletemember")
+public class RemoveMemberServlet extends HttpServlet {
+
+	private MemberService memberService;
 	
 	{
 		memberService = new MemberServiceImpl();
@@ -31,22 +31,24 @@ private MemberService memberService;
 	}
 	
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
 		String id = req.getParameter("id");
 		
-		MemberVO vo;
+		int cnt = 0;
 		try {
-			vo = memberService.getDetailMember(id);
-			req.setAttribute("member", vo);
+			cnt = memberService.removeMember(id);
+			if(cnt > 0) {
+				req.getRequestDispatcher("/memberlist").forward(req, resp);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-		req.getRequestDispatcher("/member/DetailMember.jsp").forward(req, resp);
 	}
 	
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		doPost(req, resp);
 	}
-		
 }

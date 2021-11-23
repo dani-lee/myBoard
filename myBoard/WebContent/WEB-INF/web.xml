@@ -8,4 +8,12 @@
     <filter-name>sitemesh</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
+  <servlet>
+    <servlet-name>MemberListServlet</servlet-name>
+    <servlet-class>com.myBoard.controller.MemberListServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MemberListServlet</servlet-name>
+    <url-pattern>/member/list</url-pattern>
+  </servlet-mapping>
 </web-app>

@@ -2,33 +2,49 @@ package com.myBoard.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
+import com.myBoard.command.Criteria;
+import com.myBoard.command.SearchCriteria;
 import com.myBoard.dto.MemberVO;
-import com.myBoard.dto.PagingVO;
 
 public class MemberDAOImpl implements MemberDAO {
 
 	@Override
-	public List<MemberVO> selectMemberList(SqlSession session) throws Exception {
-
-		List<MemberVO> memberList = session.selectList("Member-Mapper.selectMemberList");
-				
+	public List<MemberVO> selectMemberList(SqlSession session, Criteria cri) throws Exception {
+		int offset = cri.getStartRowNum();
+		int limit = cri.getPerPageNum();
+		RowBounds rowBounds = new RowBounds(offset,limit);
+		
+		List<MemberVO> memberList = session.selectList("Member-Mapper.selectMemberList", cri,rowBounds);
 		return memberList;
 	}
 
 	@Override
-	public List<MemberVO> getAllMember(SqlSession session, PagingVO pagingVO) throws Exception {
-		List<MemberVO> memberList = session.selectList("Member-Mapper.getAllMember", pagingVO);
-		return memberList;
-	}
-
-	@Override
-	public int getTotalCount(SqlSession session) throws Exception {
-		int totalCount = session.selectOne("Member-Mapper.getTotalCount");
+	public int selectMemberListCount(SqlSession session) throws Exception {
+		int totalCount = session.selectOne("Member-Mapper.selectMemberListCount");
 		return totalCount;
 	}
 
+	
+	@Override
+	public List<MemberVO> selectSearchMemberList(SqlSession session, SearchCriteria cri) throws Exception {
+		int offset = cri.getStartRowNum();
+		int limit = cri.getPerPageNum();
+		RowBounds rowBounds = new RowBounds(offset,limit);
+		
+		List<MemberVO> memberList = session.selectList("Member-Mapper.selectSearchMemberList", cri, rowBounds);
+		return memberList;
+	}
+
+	@Override
+	public int getSearchTotalCount(SqlSession session, SearchCriteria cri) throws Exception {
+		int totalCount = session.selectOne("Member-Mapper.selectSearchMemberListCount", cri);
+		return totalCount;
+	}
+	
+	
 	@Override
 	public int insertMember(SqlSession session, MemberVO memberVO) throws Exception {
 		int cnt = session.insert("Member-Mapper.insertMember", memberVO);
@@ -53,11 +69,7 @@ public class MemberDAOImpl implements MemberDAO {
 		return cnt;
 	}
 
-	@Override
-	public List<MemberVO> searchMember(SqlSession session, MemberVO memberVO) throws Exception {
-		List<MemberVO> searchList = session.selectList("Member-Mapper.searchMember", memberVO);
-		return searchList;
-	}
+
 
 	
 }

@@ -16,12 +16,13 @@ public class OracleMyBatisSqlSessionFactory implements SqlSessionFactory {
 	private SqlSessionFactory sqlSessionFactory;
 	
 	{
-		String config = "com/jsp/myBatis/config/sqlConfig.xml";
+		String config = "com/myBoard/myBatis/config/sqlConfig.xml";
 		
 		try {
 			Reader reader = Resources.getResourceAsReader(config);
 			
 			sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
+			
 			reader.close();
 			
 			System.out.println("sqlSesscionFactory 성공");

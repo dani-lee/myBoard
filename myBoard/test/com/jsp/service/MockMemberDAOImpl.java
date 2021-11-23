@@ -5,9 +5,9 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 
+import com.myBoard.command.Criteria;
 import com.myBoard.dao.MemberDAO;
 import com.myBoard.dto.MemberVO;
-import com.myBoard.dto.PagingVO;
 
 public class MockMemberDAOImpl implements MemberDAO{
 
@@ -20,12 +20,6 @@ public class MockMemberDAOImpl implements MemberDAO{
 			memberList.add(new MemberVO("kk"+i, "kk"+i));
 		}
 		return memberList;
-	}
-
-	@Override
-	public List<MemberVO> getAllMember(SqlSession session, PagingVO pagingVO) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override
@@ -60,6 +54,18 @@ public class MockMemberDAOImpl implements MemberDAO{
 
 	@Override
 	public List<MemberVO> searchMember(SqlSession session, MemberVO memberVO) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<MemberVO> selectMemberList(SqlSession session, Criteria cri) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<MemberVO> searchMember(SqlSession session, MemberVO memberVO, Criteria cri) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}

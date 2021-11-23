@@ -1,36 +1,38 @@
 package com.myBoard.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
+import com.myBoard.command.Criteria;
+import com.myBoard.command.PageMaker;
 import com.myBoard.dao.MemberDAO;
 import com.myBoard.dto.MemberVO;
-import com.myBoard.dto.PagingVO;
 
 public class MemberServiceImpl implements MemberService {
 
-	private SqlSessionFactory sqlSessionFactory;
+	protected SqlSessionFactory sqlSessionFactory;
 	public void setSqlSessionFactory(SqlSessionFactory sqlSessionFactory) {
 		this.sqlSessionFactory = sqlSessionFactory;
 	}
 	
-	private MemberDAO memberDAO;
+	protected MemberDAO memberDAO;
 	public void setMemberDAO(MemberDAO memberDAO) {
 		this.memberDAO = memberDAO;
 	}
 	
 	@Override
-	public List<MemberVO> getMemberList() throws Exception {
-		
+	public List<MemberVO> getMemberList(Criteria cri) throws Exception {
 		SqlSession session = sqlSessionFactory.openSession(false);
 		
 		List<MemberVO> memberList = new ArrayList<MemberVO>();
 		
 		try {
-			memberList = memberDAO.selectMemberList(session);
+			memberList = memberDAO.selectMemberList(session, cri);
 			
 			session.commit();
 		} catch (Exception e) {
@@ -46,13 +48,22 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public List<MemberVO> getAllMember(PagingVO pagingVO) throws Exception {
+	public Map<String,Object> getMemberListPage(Criteria cri) throws Exception {	
+		
+		Map<String,Object> dataMap = null;
 		SqlSession session = sqlSessionFactory.openSession(false);
-		
-		List<MemberVO> memberList = new ArrayList<MemberVO>();
-		
 		try {
-			memberList = memberDAO.getAllMember(session, pagingVO);
+			List<MemberVO> memberList = null;
+			PageMaker pageMaker = null;
+			
+			memberList = memberDAO.selectMemberList(session, cri);
+			pageMaker = new PageMaker();
+			pageMaker.setCri(cri);
+			pageMaker.setTotalCount(memberDAO.selectMemberListCount(session));
+			
+			dataMap = new HashMap<>();
+			dataMap.put("memberList", memberList);
+			dataMap.put("pageMaker", pageMaker);
 			
 			session.commit();
 		} catch (Exception e) {
@@ -64,33 +75,11 @@ public class MemberServiceImpl implements MemberService {
 			session.close();
 		}
 		
-		return memberList;
+		return dataMap;
 	}
 
 	@Override
-	public int getTotalCount() throws Exception {
-		SqlSession session = sqlSessionFactory.openSession(false);
-		
-		int totalCount = 0;
-		
-		try {
-			totalCount = memberDAO.getTotalCount(session);
-			
-			session.commit();
-		} catch (Exception e) {
-			session.rollback();
-			e.printStackTrace();
-			//...
-			throw e;
-		}finally {
-			session.close();
-		}
-		
-		return totalCount;
-	}
-
-	@Override
-	public int insertMember(MemberVO memberVO) throws Exception {
+	public int registMember(MemberVO memberVO) throws Exception {
 		SqlSession session = sqlSessionFactory.openSession(false);
 		
 		int cnt = 0;
@@ -134,7 +123,7 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public int deleteMember(String id) throws Exception {
+	public int removeMember(String id) throws Exception {
 		SqlSession session = sqlSessionFactory.openSession(false);
 		
 		int cnt = 0;
@@ -156,7 +145,7 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public int updateMember(MemberVO memberVO) throws Exception {
+	public int modifyMember(MemberVO memberVO) throws Exception {
 		SqlSession session = sqlSessionFactory.openSession(false);
 		
 		int cnt = 0;
@@ -177,27 +166,6 @@ public class MemberServiceImpl implements MemberService {
 		return cnt;
 	}
 
-	@Override
-	public List<MemberVO> searchMember(MemberVO memberVO) throws Exception {
-		SqlSession session = sqlSessionFactory.openSession(false);
-		
-		List<MemberVO> searchList = new ArrayList<MemberVO>();
-		
-		try {
-			searchList = memberDAO.searchMember(session, memberVO);
-			
-			session.commit();
-		} catch (Exception e) {
-			session.rollback();
-			e.printStackTrace();
-			//...
-			throw e;
-		}finally {
-			session.close();
-		}
-		
-		return searchList;
-	}
 
 	
 }
