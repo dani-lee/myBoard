@@ -55,9 +55,8 @@ public class MemberDAOImpl implements MemberDAO {
 	
 	
 	@Override
-	public int insertMember(SqlSession session, MemberVO memberVO) throws Exception {
-		int cnt = session.insert("Member-Mapper.insertMember", memberVO);
-		return cnt;
+	public void insertMember(SqlSession session, MemberVO memberVO) throws Exception {
+		session.insert("Member-Mapper.insertMember", memberVO);
 	}
 
 

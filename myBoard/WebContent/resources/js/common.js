@@ -14,3 +14,13 @@ function CloseWindow(parentURL){
 	window.opener.location.reload(true);
 	window.close();
 }
+
+//사용자 사진 출력
+function MemberPictureThumb(targetObj, fileName, contextPath){ //(대상, 이미지파일명)
+   if(!contextPath) contextPath="";
+   
+   targetObj.style.backgroundImage="url('"+contextPath+"/member/getPicture?picture="+fileName+"')";
+   targetObj.style.backgroundPosition="center";
+   targetObj.style.backgroundRepeat="no-repeat";
+   targetObj.style.backgroundSize="cover";
+}

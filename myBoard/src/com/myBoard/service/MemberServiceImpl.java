@@ -78,28 +78,6 @@ public abstract class MemberServiceImpl implements MemberService {
 		return dataMap;
 	}
 
-	@Override
-	public int registMember(MemberVO memberVO) throws Exception {
-		SqlSession session = sqlSessionFactory.openSession(false);
-		
-		int cnt = 0;
-		
-		try {
-			cnt = memberDAO.insertMember(session, memberVO);
-			
-			session.commit();
-		} catch (Exception e) {
-			session.rollback();
-			e.printStackTrace();
-			//...
-			throw e;
-		}finally {
-			session.close();
-		}
-		
-		return cnt;
-	}
-
 
 	@Override
 	public int removeMember(String id) throws Exception {

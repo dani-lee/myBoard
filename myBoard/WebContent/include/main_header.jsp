@@ -205,25 +205,27 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <a href="#" class="nav-link active">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
-                	회원관리
+                	myBoard
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="list" class="nav-link active">
+                <a href="member/list" target="ifr" class="nav-link active">
                   <i class="far fa-circle nav-icon"></i>
                   <p>회원목록</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="insert" class="nav-link">
+                <a href="notice/list" target="ifr" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>회원등록</p>
+                  <p>공지사항</p>
                 </a>
               </li>
             </ul>
           </li>
+          
+       
 <!--           <li class="nav-item"> -->
 <!--             <a href="#" class="nav-link"> -->
 <!--               <i class="nav-icon fas fa-th"></i> -->

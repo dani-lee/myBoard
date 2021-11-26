@@ -60,10 +60,11 @@
 	</select>
 	
 	
-	<insert id="insertMember" parameterType="member">
-		insert into member(ID, PWD, EMAIL, picture,regdate, phone, name, register,address,AUTHORITY)
-			values(#{id}, #{pwd}, #{email}, #{picture, jdbcType=VARCHAR},sysdate, #{phone, jdbcType=VARCHAR},  #{name}, #{register, jdbcType=VARCHAR}, #{address, jdbcType=VARCHAR}, #{authority, jdbcType=VARCHAR})
-	</insert>
+	<update id="insertMember" parameterType="member">
+		insert into 
+		member(id, pwd, email, phone, picture, name, authority)
+		values(#{id}, #{pwd}, #{email}, #{phone}, #{picture}, #{name}, #{authority})
+	</update>
 	
 	
 	<delete id="deleteMember" parameterType="String">

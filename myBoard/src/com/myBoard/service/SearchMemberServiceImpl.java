@@ -57,5 +57,20 @@ public class SearchMemberServiceImpl extends MemberServiceImpl {
 		}
 		
 	}
+
+
+	@Override
+	public void registMember(MemberVO member) throws Exception {
+		SqlSession session = sqlSessionFactory.openSession(false);
+		
+		try {
+			memberDAO.insertMember(session, member);
+			
+			session.commit();
+		} finally {
+			session.close();
+		}
+		
+	}
 	
 }

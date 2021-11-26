@@ -24,10 +24,8 @@ public interface MemberDAO {
 	//id 중복체크 && 디테일
 	public MemberVO selectMemberById(SqlSession session, String id) throws Exception;
 	
-	
-	
 	//회원등록
-	public int insertMember(SqlSession session, MemberVO memberVO) throws Exception;
+	public void insertMember(SqlSession session, MemberVO memberVO) throws Exception;
 	
 	//회원삭제
 	public int deleteMember(SqlSession session,String id) throws Exception;

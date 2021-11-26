@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.ibatis.session.SqlSessionFactory;
 
-import com.myBoard.command.MemberRegistCommand;
 import com.myBoard.dao.MemberDAO;
 import com.myBoard.dao.MemberDAOImpl;
 import com.myBoard.dataSource.OracleMyBatisSqlSessionFactory;
@@ -19,8 +18,9 @@ import com.myBoard.service.MemberService;
 import com.myBoard.service.MemberServiceImpl;
 import com.myBoard.service.SearchMemberServiceImpl;
 
-@WebServlet("/member/regist")
-public class RegistMemberServlet extends HttpServlet{
+
+@WebServlet("/member/detail")
+public class MemberDetailServlet extends HttpServlet {
 	
 	private MemberService memberService;
 	
@@ -28,43 +28,28 @@ public class RegistMemberServlet extends HttpServlet{
 		memberService = new SearchMemberServiceImpl();
 		SqlSessionFactory factory = new OracleMyBatisSqlSessionFactory();
 		MemberDAO memberDAO = new MemberDAOImpl();
-		((MemberServiceImpl)memberService).setSqlSessionFactory(factory);
 		((MemberServiceImpl)memberService).setMemberDAO(memberDAO);
+		((MemberServiceImpl)memberService).setSqlSessionFactory(factory);
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String url = "/member/registMember.jsp";
-		request.getRequestDispatcher(url).forward(request, response);
-	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String url = "/member/regist_success.jsp";
+		String url = "/member/detailMember.jsp";
 		
-		MemberVO member = null;
+		String id = request.getParameter("id");
 		
 		try {
-			MemberRegistCommand registData = (MemberRegistCommand) HttpRequestParameterAdapter.execute(request, MemberRegistCommand.class);
-			member = registData.toMemberVO();
-			
-		}  catch (Exception e) {
-			e.printStackTrace();
-			response.sendError(response.SC_BAD_REQUEST);
-			return;
-		}
-		
-		try {
-			memberService.registMember(member);
+			MemberVO member = memberService.getMember(id);
+			request.setAttribute("member", member);
 		} catch (Exception e) {
 			e.printStackTrace();
-			url = "/member/regist_fail.jsp";
+			url = "/member/detail_fail.jsp";
 		}
 		
 		request.getRequestDispatcher(url).forward(request, response);
 		
-	}
 		
-	/*DateTimeConverter dtConverter = new DateConverter();
-	dtConverter.setPattern("yyyy-MM-dd");
-	ConvertUtils.register(dtConverter, Date.class);*/
+	}
+
+	
 }
