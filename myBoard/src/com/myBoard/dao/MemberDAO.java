@@ -21,14 +21,13 @@ public interface MemberDAO {
 	//검색 리스트 회원수 조회
 	public int getSearchTotalCount(SqlSession session, SearchCriteria cri) throws Exception;
 	
+	//id 중복체크 && 디테일
+	public MemberVO selectMemberById(SqlSession session, String id) throws Exception;
 	
 	
 	
 	//회원등록
 	public int insertMember(SqlSession session, MemberVO memberVO) throws Exception;
-	
-	//상세정보 조회
-	public MemberVO getDetailMember(SqlSession session, String id) throws Exception;
 	
 	//회원삭제
 	public int deleteMember(SqlSession session,String id) throws Exception;

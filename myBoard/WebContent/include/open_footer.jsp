@@ -10,5 +10,8 @@
 <script src="<%=request.getContextPath() %>/resources/bootstrap/dist/js/adminlte.min.js"></script>
 <!-- common.js -->
 <script src="<%=request.getContextPath()%>/resources/js/common.js"></script>
+<!-- jquery.serializejson.min.js -->
+<script src="<%=request.getContextPath()%>/resources/js/jquery.serializejson.min.js"></script>
+
 </body>
 </html>

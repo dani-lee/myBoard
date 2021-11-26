@@ -54,11 +54,15 @@
 	</select>	
 	
 	
+	<select id="selectMemberById" resultType="member" parameterType="string">
+		select * from member
+		where id = #{id}
+	</select>
 	
 	
 	<insert id="insertMember" parameterType="member">
-		insert into member(ID, PWD, EMAIL, regdate, phone, name, register,address,AUTHORITY)
-			values(#{id}, #{pwd}, #{email}, #{regDate}, #{phone},  #{name},#{register},#{address},#{authority})
+		insert into member(ID, PWD, EMAIL, picture,regdate, phone, name, register,address,AUTHORITY)
+			values(#{id}, #{pwd}, #{email}, #{picture, jdbcType=VARCHAR},sysdate, #{phone, jdbcType=VARCHAR},  #{name}, #{register, jdbcType=VARCHAR}, #{address, jdbcType=VARCHAR}, #{authority, jdbcType=VARCHAR})
 	</insert>
 	
 	
@@ -67,10 +71,6 @@
 			where id = #{id}
 	</delete>
 	
-	<select id="getDetailMember" parameterType="String" resultType="member">
-		select * from member
-			where id = #{id}
-	</select>
 	
 	<update id="updateMember" parameterType="member">
 		update member

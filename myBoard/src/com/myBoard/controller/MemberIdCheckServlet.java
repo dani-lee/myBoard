@@ -1,6 +1,7 @@
 package com.myBoard.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,43 +14,50 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import com.myBoard.dao.MemberDAO;
 import com.myBoard.dao.MemberDAOImpl;
 import com.myBoard.dataSource.OracleMyBatisSqlSessionFactory;
+import com.myBoard.dto.MemberVO;
 import com.myBoard.service.MemberService;
 import com.myBoard.service.MemberServiceImpl;
 import com.myBoard.service.SearchMemberServiceImpl;
 
 
-@WebServlet("/deletemember")
-public class RemoveMemberServlet extends HttpServlet {
-
+@WebServlet("/member/idCheck")
+public class MemberIdCheckServlet extends HttpServlet {
+	
 	private MemberService memberService;
 	
 	{
 		memberService = new SearchMemberServiceImpl();
 		SqlSessionFactory factory = new OracleMyBatisSqlSessionFactory();
 		MemberDAO memberDAO = new MemberDAOImpl();
-		((MemberServiceImpl)memberService).setSqlSessionFactory(factory);
 		((MemberServiceImpl)memberService).setMemberDAO(memberDAO);
+		((MemberServiceImpl)memberService).setSqlSessionFactory(factory);
 	}
 	
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String id = req.getParameter("id");
+		String url = null;
+		String resultMsg = "";
+		String id = request.getParameter("id");
 		
-		int cnt = 0;
+		response.setContentType("text/plain; charset=utf=8");
+		PrintWriter out = response.getWriter();
+		
 		try {
-			cnt = memberService.removeMember(id);
-			if(cnt > 0) {
-				req.getRequestDispatcher("/memberlist").forward(req, resp);
+			MemberVO member = memberService.getMember(id);
+			
+			if(member != null) {
+				resultMsg = "DUPLICATED";
+				
+				out.print(resultMsg);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			response.sendError(response.SC_INTERNAL_SERVER_ERROR);
+		}finally {
+			out.close();
 		}
 		
 	}
+
 	
-	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		doPost(req, resp);
-	}
+
 }

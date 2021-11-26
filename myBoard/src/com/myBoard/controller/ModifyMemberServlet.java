@@ -22,6 +22,7 @@ import com.myBoard.dataSource.OracleMyBatisSqlSessionFactory;
 import com.myBoard.dto.MemberVO;
 import com.myBoard.service.MemberService;
 import com.myBoard.service.MemberServiceImpl;
+import com.myBoard.service.SearchMemberServiceImpl;
 
 
 @WebServlet("/updatemember")
@@ -30,7 +31,7 @@ public class ModifyMemberServlet extends HttpServlet{
 	private MemberService memberService;
 	
 	{
-		memberService = new MemberServiceImpl();
+		memberService = new SearchMemberServiceImpl();
 		SqlSessionFactory factory = new OracleMyBatisSqlSessionFactory();
 		MemberDAO memberDAO = new MemberDAOImpl();
 		((MemberServiceImpl)memberService).setSqlSessionFactory(factory);
@@ -42,9 +43,9 @@ public class ModifyMemberServlet extends HttpServlet{
 		String id = req.getParameter("id");
 		
 		
-		MemberVO vo;
+		MemberVO vo = null;
 		try {
-			vo = memberService.getDetailMember(id);
+//			vo = memberService.getDetailMember(id);
 			req.setAttribute("member", vo);
 		} catch (Exception e) {
 			e.printStackTrace();

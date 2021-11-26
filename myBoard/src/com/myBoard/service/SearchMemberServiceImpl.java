@@ -44,5 +44,18 @@ public class SearchMemberServiceImpl extends MemberServiceImpl {
 		
 		return dataMap;
 	}
+
+	@Override
+	public MemberVO getMember(String id) throws Exception {
+		SqlSession session = sqlSessionFactory.openSession(false);
+		
+		try {
+			MemberVO member = memberDAO.selectMemberById(session, id);
+			return member;
+		} finally {
+			session.close();
+		}
+		
+	}
 	
 }

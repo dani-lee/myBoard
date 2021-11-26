@@ -15,15 +15,15 @@ public interface MemberService {
 	//페이지
 	public Map<String,Object> getMemberListPage(Criteria cri) throws Exception;
 	
-	
+	//id중복체크 && 상세정보 조회
+	public MemberVO getMember(String id) throws Exception;
 	
 	
 	
 	//회원등록
 	public int registMember(MemberVO memberVO) throws Exception;
 	
-	//상세정보 조회
-	public MemberVO getDetailMember(String id) throws Exception;
+	
 	
 	//회원삭제
 	public int removeMember(String id) throws Exception;

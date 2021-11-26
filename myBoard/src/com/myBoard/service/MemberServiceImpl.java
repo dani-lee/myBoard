@@ -13,7 +13,7 @@ import com.myBoard.command.PageMaker;
 import com.myBoard.dao.MemberDAO;
 import com.myBoard.dto.MemberVO;
 
-public class MemberServiceImpl implements MemberService {
+public abstract class MemberServiceImpl implements MemberService {
 
 	protected SqlSessionFactory sqlSessionFactory;
 	public void setSqlSessionFactory(SqlSessionFactory sqlSessionFactory) {
@@ -100,27 +100,6 @@ public class MemberServiceImpl implements MemberService {
 		return cnt;
 	}
 
-	@Override
-	public MemberVO getDetailMember(String id) throws Exception {
-		SqlSession session = sqlSessionFactory.openSession(false);
-		
-		MemberVO memberVO = new MemberVO();
-		
-		try {
-			memberVO = memberDAO.getDetailMember(session, id);
-			
-			session.commit();
-		} catch (Exception e) {
-			session.rollback();
-			e.printStackTrace();
-			//...
-			throw e;
-		}finally {
-			session.close();
-		}
-		
-		return memberVO;
-	}
 
 	@Override
 	public int removeMember(String id) throws Exception {
@@ -165,6 +144,9 @@ public class MemberServiceImpl implements MemberService {
 		
 		return cnt;
 	}
+
+	@Override
+	public abstract MemberVO getMember(String id) throws Exception;
 
 
 	

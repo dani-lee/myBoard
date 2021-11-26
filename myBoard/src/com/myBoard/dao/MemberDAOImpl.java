@@ -46,16 +46,20 @@ public class MemberDAOImpl implements MemberDAO {
 	
 	
 	@Override
+	public MemberVO selectMemberById(SqlSession session, String id) throws Exception {
+		MemberVO member = session.selectOne("Member-Mapper.selectMemberById",id);
+		return member;
+	}
+
+	
+	
+	
+	@Override
 	public int insertMember(SqlSession session, MemberVO memberVO) throws Exception {
 		int cnt = session.insert("Member-Mapper.insertMember", memberVO);
 		return cnt;
 	}
 
-	@Override
-	public MemberVO getDetailMember(SqlSession session, String id) throws Exception {
-		MemberVO memberVO = session.selectOne("Member-Mapper.getDetailMember", id);
-		return memberVO;
-	}
 
 	@Override
 	public int deleteMember(SqlSession session, String id) throws Exception {
@@ -69,6 +73,7 @@ public class MemberDAOImpl implements MemberDAO {
 		return cnt;
 	}
 
+	
 
 
 	

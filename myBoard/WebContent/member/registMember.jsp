@@ -91,7 +91,7 @@
 								</div>
 							</div>
 							<div class="form-group row">
-								<label for="email" class="col-sm-3" style="font-size: 0.9em;">이메일</label>
+								<label for="email" class="col-sm-3" style="font-size: 0.9em;"><span style="color: red; font-weight: bold;">*</span>이메일</label>
 								<div class="col-sm-9 input-group-sm">
 									<input name="email" type="email" class="form-control" id="email" placeholder="example@naver.com">
 								</div>
@@ -189,25 +189,151 @@ function picture_go() {
 
 function upload_go(){
 	
-	/* let data = new FormData();
-	data.append("inputFile", $('#inputFile').prop('files')[0])
+	if(!$('input[name="pictureFile"]').val()){
+		alert("사진을 선택하세요");
+		$('input[name="pictureFile"]').click();
+		return;
+	}
+	if($('input[name="checkUpload"]').val()==1){
+		alert("이미 업로드 된 사진입니다.");
+		return;
+	}
 	
-    $.ajax({
-		url: '/myBoard/RegistAttach.do',  
-		data: data,
-		dataType: 'json',
-		type: 'post',
-		processData: false, 		  
-		contentType: false, 
-		success: function(res) {
-			console.log("ajax-success");
+	$.ajax({
+		url 		: 'picture',
+		data 		: formData,
+		type 		: 'post',
+		processData : false,
+		contentType : false,
+		success 	: function(data){
+			//업로드 확인 변수 세팅
+			$('input[name="checkUpload"]').val(1);
+			
+			//저장된 파일명 저장
+			$('input#oldFile').val(data);	//변경시 삭제될 파일명
+			console.log(data);
+			$('form[role="form"] input[name="picture"]').val(data);
+			alert("사진이 업로드 되었습니다.");
 		},
-		error : function (request,status,error){
-			alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error)
+		error 		: function(error){
+			alert("현재 사진 업로드가 불가합니다. \n 관리자에게 연락바랍니다.");
+			console.log(error.status);
 		}
-	}) */
+	})
+	
+}	
+let checkedID = "";
+function idCheck_go(){
+	let input_ID = $('input[name="id"]');
+	
+	if(!input_ID.val()){
+		alert("아이디를 입력하세요.");
+		input_ID.focus();
+		return;
+	}else{
+		//아이디는 4~12자의 영문자와 숫자로만 입력
+		let idReg = /^[a-z]{1}[a-zA-Z0-9]{3,12}$/;
+		if(!idReg.test(input_ID.val())){
+			alert("아이디는 첫글자는 영소문자이며, \n 4~13자의 영문자와 숫자로만 입력해야합니다.");
+			input_ID.focus();
+			return;
+		}
+	}
+	
+	$.ajax({
+		url 		: 'idCheck?id='+input_ID.val().trim(),
+		type 		: 'get',
+		success 	: function(result){
+			if(result == "DUPLICATED"){
+				alert("중복된 아이디입니다.");
+				$('input[name="id"]').focus();
+			}else{
+				alert("사용가능한 아이디입니다.");
+				checkedID = input_ID.val().trim();
+				input_ID.val(checkedID);
+			}
+		},
+		error 		: function(error){
+			alert("시스템 장애로 가입이 불가합니다. ")
+		}
+	})
+}
+
+function regist_go(){
+	let input_PWD = $('input[name="pwd"]');
+	
+	if(!input_PWD.val()){
+		alert("비밀번호를 입력하세요");
+		input_PWD.focus();
+		return;
+	}else{
+		let pwdReg = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^*+=-]).{8,20}$/;
+		if(!pwdReg.test(input_PWD.val())){
+			alert("비밀 번호는 8~20자로 영문자,숫자,특수문자 조합이어야합니다.");
+			input_PWD.focus();
+			return;
+		}
+	}
+	
+	let input_NAME = $('input[name="name"]');
+	
+	if(!input_NAME.val()){
+		alert("이름을 입력하세요");
+		input_NAME.focus();
+		return;
+	}
+	
+	let input_EMAIL = $('input[name="email"]');
+	
+	if(!input_EMAIL.val()){
+		alert("이메일을 입력해주세요.");
+		input_EMAIL.focus();
+		return;
+	}else{
+		let emailReg = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+		if(!emailReg.test(input_EMAIL.val())){
+			alert("이메일 형식에 맞게 입력해주세요.");
+			input_EMAIL.focus();
+			return;
+		}
+	}
+	
+	let input_PHONE = $('input[name="phone"]');
+	
+	if(input_PHONE.val()){
+		let phoneReg = /^[0-9]{4}$/;
+		$("input[name='phone']").each(function() {
+			if(!phoneReg.test(input_PHONE.val())){
+				alert("숫자만 입력 가능합니다.");
+				input_PHONE.focus();
+				return;
+			}
+		});
+		
+	}
+	
+	formDatas = $('form[role="form"]').serializeArray();
+	console.log(formDatas);
+	
+	$.ajax({
+		url 		: 'regist',
+		type 		: 'post',
+		dataType	: 'json',
+		data 		: formDatas,
+		success 	: function(result){
+			if(result == "SUCCESS"){
+				alert(result.name + "회원 등록에 성공했습니다.");
+				window.close();
+			}
+		},
+		error 		: function(error){
+			alert("시스템 장애로 가입이 불가합니다. ")
+		}
+	}) 
+	
 	
 }
+
 
 
 </script>
