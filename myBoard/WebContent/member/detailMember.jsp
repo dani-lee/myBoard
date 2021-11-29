@@ -13,17 +13,9 @@
 		<div class="content-header">
 			<div class="container-fluid">
 
-				<div class="card">
+				<div class="card card-secondary">
 					<div class="card-header">
-						<h3 class="col-9 card-title">회원 정보</h3>
-						<div class="col-3 row">
-							<a href="updatemember?id=${member.id }">
-								<button type="button" class="btn btn-block btn-primary" style="width: 100px; margin-right: 10px">수정</button>
-							</a>
-							<a href="deletemember?id=${member.id }">
-								<button type="button" class="btn btn-block btn-danger" style="width: 100px;">삭제</button>
-							</a>
-						</div>
+						<h3 class="card-title">회원 정보</h3>
 					</div>
 					<!-- /.card-header -->
 					<div class="card-body">
@@ -45,7 +37,7 @@
 								<tr>
 									<td>사진</td>
 									<td>
-										<div id="pictureView" data-id="${member.id }" style="border: 1px solid green; height: 200px; width: 200px; margin: 0 auto;"></div>
+										<div id="pictureView" data-id="${member.id }" style="border: 1px solid green; height: 200px; width: 140px; margin: 0 auto;"></div>
 									</td>
 								</tr>
 								<tr>
@@ -72,7 +64,10 @@
 								</tr>
 								<tr>
 									<td>휴대폰번호</td>
-									<td>${member.phone }</td>
+									<c:if test="${!empty member.phone }">
+									<c:set var="phone" value="${member.phone.replace('-','') }" />
+									<td>${phone.substring(0,3)}-${phone.substring(3,7)}-${phone.substring(7)}</td>
+							</c:if>
 								</tr>
 
 								<tr>
@@ -92,7 +87,32 @@
 						</table>
 					</div>
 					<!-- /.card-body -->
+					<div class="card-footer" style="padding: 5px 0;">
+					<div class="row">
+						<%-- 	<c:if test="${loginUser.id eq member.id }"> --%>
+						<div class="col-sm-3 text-center">
+							<button type="button" onclick="location.href='modify?id=${member.id}';" id="modifyBtn" class="btn btn-warning ">수 정</button>
+						</div>
 
+						<div class="col-sm-3 text-center">
+							<button type="button" onclick="" id="deleteBtn" class="btn btn-danger">삭 제</button>
+						</div>
+
+						<div class="col-sm-3 text-center">
+							<c:if test="${member.enabled ne 0}">
+								<button type="button" onclick="" id="stopBtn" class="btn btn-btn-info">비활성</button>
+							</c:if>
+							<c:if test="${member.enabled eq 0}">
+								<button type="button" onclick="" id="activeBtn" class="btn btn-btn-info">활&nbsp;&nbsp;성</button>
+							</c:if>
+						</div>
+						<%-- </c:if> --%>
+
+						<div class="col-sm-3 text-center">
+							<button type="button" id="listBtn" onclick="CloseWindow();" class="btn btn-btn-info pull-right">닫 기</button>
+						</div>
+					</div>
+				</div>
 
 
 				</div>

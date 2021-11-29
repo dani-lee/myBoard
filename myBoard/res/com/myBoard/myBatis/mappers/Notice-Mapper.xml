@@ -21,4 +21,9 @@
 	<select id="selectNoticeListCount" resultType="int">
 		select count(*) from notice
 	</select>
+	
+	<select id="selectNoticeByNno" resultType="notice">
+		select * from notice
+		where nno = #{nno}
+	</select>
 </mapper>

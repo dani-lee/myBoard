@@ -59,4 +59,17 @@ public class NoticeServiceImpl implements NoticeService{
 		return dataMap;
 	}
 
+	@Override
+	public NoticeVO getNotice(int nno) throws Exception {
+		SqlSession session = sqlSessionFactory.openSession(false);
+		
+		try {
+			NoticeVO notice = noticeDAO.selectNoticeByNno(session, nno);
+			return notice;
+		} finally {
+			session.close();
+		}
+		
+	}
+
 }

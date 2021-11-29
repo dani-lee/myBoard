@@ -75,17 +75,14 @@
 	
 	<update id="updateMember" parameterType="member">
 		update member
-			set id = #{id},
-				pwd = #{pwd},
-				email = #{email},
-				enabled = #{enabled},
-				phone = #{phone},
-				regdate = #{regDate},
-				name = #{name},
-				register = #{register},
-				address = #{address},
-				authority = #{authority}
-			where id = #{id}
+		set
+		pwd=#{pwd}, email=#{email}, phone=#{phone}, name=#{name}, picture=#{picture}, enabled=#{enabled}, regdate=#{regDate}, register=#{register}, address=#{address}
+		
+		<if test="authority != null">
+			, authority=#{authority}
+		</if>	
+		
+		where id=#{id}
 	</update>
 	
 	

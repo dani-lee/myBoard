@@ -1,5 +1,6 @@
 package com.myBoard.dao;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -25,13 +26,12 @@ public interface MemberDAO {
 	public MemberVO selectMemberById(SqlSession session, String id) throws Exception;
 	
 	//회원등록
-	public void insertMember(SqlSession session, MemberVO memberVO) throws Exception;
+	public void insertMember(SqlSession session, MemberVO member) throws Exception;
 	
 	//회원삭제
 	public int deleteMember(SqlSession session,String id) throws Exception;
 	
 	//회원정보 수정
-	public int updateMember(SqlSession session,MemberVO memberVO) throws Exception;
-	
+	public void updateMember(SqlSession session, MemberVO member) throws SQLException;
 	
 }

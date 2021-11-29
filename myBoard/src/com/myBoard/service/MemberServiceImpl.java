@@ -101,27 +101,7 @@ public abstract class MemberServiceImpl implements MemberService {
 		return cnt;
 	}
 
-	@Override
-	public int modifyMember(MemberVO memberVO) throws Exception {
-		SqlSession session = sqlSessionFactory.openSession(false);
-		
-		int cnt = 0;
-		
-		try {
-			cnt = memberDAO.updateMember(session, memberVO);
-			
-			session.commit();
-		} catch (Exception e) {
-			session.rollback();
-			e.printStackTrace();
-			//...
-			throw e;
-		}finally {
-			session.close();
-		}
-		
-		return cnt;
-	}
+
 
 	@Override
 	public abstract MemberVO getMember(String id) throws Exception;

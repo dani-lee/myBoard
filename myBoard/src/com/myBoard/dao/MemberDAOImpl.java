@@ -1,5 +1,6 @@
 package com.myBoard.dao;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
@@ -53,10 +54,9 @@ public class MemberDAOImpl implements MemberDAO {
 
 	
 	
-	
 	@Override
-	public void insertMember(SqlSession session, MemberVO memberVO) throws Exception {
-		session.insert("Member-Mapper.insertMember", memberVO);
+	public void insertMember(SqlSession session, MemberVO member) throws Exception {
+		session.insert("Member-Mapper.insertMember", member);
 	}
 
 
@@ -67,12 +67,11 @@ public class MemberDAOImpl implements MemberDAO {
 	}
 
 	@Override
-	public int updateMember(SqlSession session, MemberVO memberVO) throws Exception {
-		int cnt = session.update("Member-Mapper.updateMember", memberVO);
-		return cnt;
+	public void updateMember(SqlSession session, MemberVO member) throws SQLException {
+		session.update("Member-Mapper.updateMember", member);
 	}
 
-	
+
 
 
 	

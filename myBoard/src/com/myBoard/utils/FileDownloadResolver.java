@@ -34,8 +34,8 @@ public class FileDownloadResolver {
 
 		String headerKey = "Content-Disposition";
 
-		// 한글깨짐 방지 : ISO-8859-1  -------------------------------수정필요
-		String sendFileName = MakeFileName.toUUIDFileName(downloadFile.getName(), "\\$\\$");
+		// 한글깨짐 방지 : ISO-8859-1 
+		String sendFileName = MakeFileName.parseFileNameFromUUID(downloadFile.getName(), "\\$\\$");
 
 		String header = request.getHeader("User-Agent");
 		if (header.contains("MSIE")) {

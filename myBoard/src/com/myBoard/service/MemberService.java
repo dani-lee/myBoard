@@ -19,15 +19,15 @@ public interface MemberService {
 	public MemberVO getMember(String id) throws Exception;
 	
 	//회원등록
-	public void registMember(MemberVO memberVO) throws Exception;
+	public void registMember(MemberVO member) throws Exception;
 	
-	
+	//회원정보 수정
+	public void modifyMember(MemberVO member) throws Exception;
 	
 	//회원삭제
 	public int removeMember(String id) throws Exception;
 	
-	//회원정보 수정
-	public int modifyMember(MemberVO memberVO) throws Exception;
+	
 	
 	
 }

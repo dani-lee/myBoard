@@ -12,6 +12,8 @@
 <script src="<%=request.getContextPath()%>/resources/js/common.js"></script>
 <!-- jquery.serializejson.min.js -->
 <script src="<%=request.getContextPath()%>/resources/js/jquery.serializejson.min.js"></script>
+<!-- Summernote -->
+<script src="<%=request.getContextPath()%>/resources/bootstrap/plugins/summernote/summernote-bs4.min.js"></script>
 
 </body>
 </html>

@@ -90,7 +90,7 @@
 								
 								<c:if test="${!empty memberList }">
 									<c:forEach items="${memberList }" var="member">
-									<tr onclick="OpenWindow('detail?id=${member.id }','','800','900');" style="cursor:pointer;">
+									<tr onclick="OpenWindow('detail?id=${member.id }','','600','900');" style="cursor:pointer;">
 										<td>${member.id }</td>
 										<td>${member.pwd }</td>
 										<td>${member.email }</td>

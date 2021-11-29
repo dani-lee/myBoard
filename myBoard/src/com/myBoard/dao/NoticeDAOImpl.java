@@ -33,4 +33,10 @@ public class NoticeDAOImpl implements NoticeDAO{
 		return pointList;
 	}
 
+	@Override
+	public NoticeVO selectNoticeByNno(SqlSession session, int nno) throws Exception {
+		NoticeVO notice = session.selectOne("Notice-Mapper.selectNoticeByNno",nno);
+		return notice;
+	}
+
 }
