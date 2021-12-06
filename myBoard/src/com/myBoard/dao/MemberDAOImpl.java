@@ -1,7 +1,9 @@
 package com.myBoard.dao;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
@@ -61,14 +63,23 @@ public class MemberDAOImpl implements MemberDAO {
 
 
 	@Override
-	public int deleteMember(SqlSession session, String id) throws Exception {
-		int cnt = session.delete("Member-Mapper.deleteMember", id);
-		return cnt;
+	public void updateMember(SqlSession session, MemberVO member) throws SQLException {
+		session.update("Member-Mapper.updateMember", member);
 	}
 
 	@Override
-	public void updateMember(SqlSession session, MemberVO member) throws SQLException {
-		session.update("Member-Mapper.updateMember", member);
+	public void deleteMember(SqlSession session, String id) throws SQLException {
+		session.update("Member-Mapper.deleteMember",id);
+	}
+
+	@Override
+	public void enabledMember(SqlSession session, String id, int enabled) throws SQLException {
+		Map<String,Object> dataMap = new HashMap<String, Object>();
+		
+		dataMap.put("id", id);
+		dataMap.put("enabled", enabled);
+		
+		session.update("Member-Mapper.enabledMember",dataMap);
 	}
 
 

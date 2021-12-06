@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans>
+	<!-- dataSource -->
+	<bean id="sqlSessionFactory" class="com.myBoard.dataSource.OracleMyBatisSqlSessionFactory" />
+
+	<!-- Repository Layer -->
+	<bean id="memberDAO" class="com.myBoard.dao.MemberDAOImpl" />
+	
+	<!-- Service Layer -->
+	<bean id="memberService" class="com.myBoard.service.SearchMemberServiceImpl">
+		<property name="sqlSessionFactory" ref-value="sqlSessionFactory" />
+		<property name="memberDAO" ref-value="memberDAO" />
+	</bean>
+	
+	<bean id="memberServiceForModify" class="com.myBoard.service.MemberServiceForModifyImpl">
+		<property name="sqlSessionFactory" ref-value="sqlSessionFactory" />
+		<property name="memberDAO" ref-value="memberDAO" />
+	</bean>
+	
+	<bean id="menuService" class="com.myBoard.service.MenuServiceImpl">
+		<property name="sqlSessionFactory" ref-value="sqlSessionFactory" />
+		<property name="menuDAO" ref-value="menuDAO"/>
+	</bean>
+</beans>

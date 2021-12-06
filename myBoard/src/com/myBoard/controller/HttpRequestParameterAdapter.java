@@ -23,7 +23,7 @@ public class HttpRequestParameterAdapter {
 				
 				String[] paramValues = request.getParameterValues(requestParamName);
 				
-				if(paramValues.length > 0) {
+				if(paramValues != null && paramValues.length > 0) {
 					if(method.getParameterTypes()[0].isArray()) {
 						method.invoke(obj, new Object[] {paramValues});
 					}else {

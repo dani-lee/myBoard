@@ -1,6 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:web="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+   <context-param>
+  	<param-name>contextConfigLocation</param-name>
+  	<param-value>classpath:com/myBoard/context/application-context.xml</param-value>
+  </context-param>
+  <listener>
+  	<listener-class>com.myBoard.listner.ApplicationContextInitListner</listener-class>
+  </listener>
+  
   <filter>
+    <filter-name>Set Character Encoding</filter-name>
+    <filter-class>org.apache.catalina.filters.SetCharacterEncodingFilter</filter-class>
+    <init-param>
+      <param-name>encoding</param-name>
+      <param-value>utf-8</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>Set Character Encoding</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  <filter>
+  
+  
     <filter-name>sitemesh</filter-name>
     <filter-class>com.opensymphony.sitemesh.webapp.SiteMeshFilter</filter-class>
   </filter>
@@ -8,6 +30,22 @@
     <filter-name>sitemesh</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
+  <filter>
+  
+  
+    <filter-name>CheckEnabledMemberFilter</filter-name>
+    <filter-class>com.myBoard.filter.CheckEnabledMemberFilter</filter-class>
+    <init-param>
+      <param-name>checkUrl</param-name>
+      <param-value>regist,remove,modify</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>CheckEnabledMemberFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  
+  
   <servlet>
     <servlet-name>MemberListServlet</servlet-name>
     <servlet-class>com.myBoard.controller.MemberListServlet</servlet-class>
@@ -16,4 +54,6 @@
     <servlet-name>MemberListServlet</servlet-name>
     <url-pattern>/member/list</url-pattern>
   </servlet-mapping>
+  
+  
 </web-app>

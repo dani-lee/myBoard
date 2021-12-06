@@ -10,6 +10,7 @@
  		<typeAlias type="java.lang.Integer" alias="int"/>
  		
  		<typeAlias type="com.myBoard.dto.MemberVO" alias="member"/>
+ 		<typeAlias type="com.myBoard.dto.MenuVO" alias="menu"/>
  		<typeAlias type="com.myBoard.dto.NoticeVO" alias="notice"/>
  	</typeAliases>
  	
@@ -31,6 +32,7 @@
 	
  	<mappers>
  		<mapper resource="com/myBoard/myBatis/mappers/Member-Mapper.xml" />
+ 		<mapper resource="com/myBoard/myBatis/mappers/Menu-Mapper.xml" />
  		<mapper resource="com/myBoard/myBatis/mappers/Notice-Mapper.xml" />
  	</mappers>
  </configuration>

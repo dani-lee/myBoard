@@ -15,6 +15,7 @@ public class NoticeVO {
 	private Date endDate;
 	private Date updateDate;
 	private String dist;
+	
 	public int getNno() {
 		return nno;
 	}

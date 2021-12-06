@@ -26,4 +26,19 @@
 		select * from notice
 		where nno = #{nno}
 	</select>
+	
+	<select id="selectNoticePrevNextList" resultType="notice">
+		SELECT A.*
+			FROM (
+			    SELECT
+			        nno,
+			        title,
+			        LEAD(nno, 1) OVER (ORDER BY nno DESC) AS NEXT_NO,
+			        LEAD(title, 1, '다음글이 없습니다') OVER (ORDER BY nno DESC) AS NEXT_TITLE,
+			        LAG(nno, 1) OVER (ORDER BY nno DESC) AS PRE_NO,
+			        LAG(title, 1, '이전글이 없습니다') OVER (ORDER BY nno DESC) AS PRE_TITLE
+			    FROM notice
+			) A
+		where nno = #{nno}
+	</select>
 </mapper>

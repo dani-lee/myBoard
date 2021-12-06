@@ -66,13 +66,6 @@
 		values(#{id}, #{pwd}, #{email}, #{phone}, #{picture}, #{name}, #{authority})
 	</update>
 	
-	
-	<delete id="deleteMember" parameterType="String">
-		delete member
-			where id = #{id}
-	</delete>
-	
-	
 	<update id="updateMember" parameterType="member">
 		update member
 		set
@@ -85,7 +78,16 @@
 		where id=#{id}
 	</update>
 	
+	<update	id="enabledMember">
+		update member
+		set enabled = #{enabled}
+		where id = #{id}
+	</update>
 	
+	<update id="deleteMember" parameterType="str">
+		delete from member
+		where id = #{id}
+	</update>
 	
 		
  </mapper>

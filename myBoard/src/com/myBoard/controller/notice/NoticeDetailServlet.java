@@ -13,6 +13,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import com.myBoard.dao.NoticeDAO;
 import com.myBoard.dao.NoticeDAOImpl;
 import com.myBoard.dataSource.OracleMyBatisSqlSessionFactory;
+import com.myBoard.dto.NoticeForPrevNextVO;
 import com.myBoard.dto.NoticeVO;
 import com.myBoard.service.NoticeService;
 import com.myBoard.service.NoticeServiceImpl;
@@ -37,13 +38,20 @@ public class NoticeDetailServlet extends HttpServlet {
 		
 		try {
 			NoticeVO notice = noticeService.getNotice(nno);
+			NoticeForPrevNextVO noticePrevNext = noticeService.getNotivePrevNextList(nno);
+			
+			System.out.println(notice);
+			System.out.println(noticePrevNext);
+			request.setAttribute("noticePrevNext", noticePrevNext);
 			request.setAttribute("notice", notice);
+			
+			request.getRequestDispatcher(url).forward(request, response);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			response.sendError(response.SC_INTERNAL_SERVER_ERROR);
 		}
 		
-		request.getRequestDispatcher(url).forward(request, response);
 		
 	}
 

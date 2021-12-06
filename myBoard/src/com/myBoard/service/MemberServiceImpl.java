@@ -80,30 +80,6 @@ public abstract class MemberServiceImpl implements MemberService {
 
 
 	@Override
-	public int removeMember(String id) throws Exception {
-		SqlSession session = sqlSessionFactory.openSession(false);
-		
-		int cnt = 0;
-		
-		try {
-			cnt = memberDAO.deleteMember(session, id);
-			
-			session.commit();
-		} catch (Exception e) {
-			session.rollback();
-			e.printStackTrace();
-			//...
-			throw e;
-		}finally {
-			session.close();
-		}
-		
-		return cnt;
-	}
-
-
-
-	@Override
 	public abstract MemberVO getMember(String id) throws Exception;
 
 

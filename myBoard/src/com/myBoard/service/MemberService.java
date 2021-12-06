@@ -25,8 +25,10 @@ public interface MemberService {
 	public void modifyMember(MemberVO member) throws Exception;
 	
 	//회원삭제
-	public int removeMember(String id) throws Exception;
+	public void removeMember(String id) throws Exception;
 	
+	//활성화&비활성화
+	public void modifyEnabled(String id, int enabled) throws Exception;
 	
 	
 	

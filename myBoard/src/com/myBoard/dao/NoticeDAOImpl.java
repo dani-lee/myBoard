@@ -6,6 +6,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
 import com.myBoard.command.SearchCriteria;
+import com.myBoard.dto.NoticeForPrevNextVO;
 import com.myBoard.dto.NoticeVO;
 
 public class NoticeDAOImpl implements NoticeDAO{
@@ -37,6 +38,12 @@ public class NoticeDAOImpl implements NoticeDAO{
 	public NoticeVO selectNoticeByNno(SqlSession session, int nno) throws Exception {
 		NoticeVO notice = session.selectOne("Notice-Mapper.selectNoticeByNno",nno);
 		return notice;
+	}
+
+	@Override
+	public NoticeForPrevNextVO selectNoticePrevNextList(SqlSession session, int nno) throws Exception {
+		NoticeForPrevNextVO prevNext = session.selectOne("Notice-Mapper.selectNoticePrevNextList", nno);
+		return prevNext;
 	}
 
 }

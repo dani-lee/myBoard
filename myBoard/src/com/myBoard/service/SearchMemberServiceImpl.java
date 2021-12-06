@@ -87,5 +87,30 @@ public class SearchMemberServiceImpl extends MemberServiceImpl {
 		
 		
 	}
+
+	@Override
+	public void removeMember(String id) throws Exception {
+		SqlSession session = sqlSessionFactory.openSession(false);
+		try {
+			memberDAO.deleteMember(session, id);
+			session.commit();
+		} finally {
+			session.close();
+		}
+		
+	}
+
+	@Override
+	public void modifyEnabled(String id, int enabled) throws Exception {
+		SqlSession session = sqlSessionFactory.openSession(false);
+		
+		try {
+			memberDAO.enabledMember(session, id, enabled);
+			session.commit();
+		} finally {
+			session.close();
+		}
+		
+	}
 	
 }

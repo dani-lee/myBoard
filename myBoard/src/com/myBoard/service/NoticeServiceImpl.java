@@ -7,11 +7,10 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
-import com.myBoard.command.Criteria;
 import com.myBoard.command.PageMaker;
 import com.myBoard.command.SearchCriteria;
 import com.myBoard.dao.NoticeDAO;
-import com.myBoard.dto.MemberVO;
+import com.myBoard.dto.NoticeForPrevNextVO;
 import com.myBoard.dto.NoticeVO;
 
 public class NoticeServiceImpl implements NoticeService{
@@ -70,6 +69,19 @@ public class NoticeServiceImpl implements NoticeService{
 			session.close();
 		}
 		
+	}
+
+	@Override
+	public NoticeForPrevNextVO getNotivePrevNextList(int nno) throws Exception {
+		SqlSession session = sqlSessionFactory.openSession(false);
+		
+		try {
+			NoticeForPrevNextVO noticePrevNext = noticeDAO.selectNoticePrevNextList(session, nno);
+			
+			return noticePrevNext;
+		} finally {
+			session.close();
+		}
 	}
 
 }
